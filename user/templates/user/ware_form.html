@@ -1,0 +1,18 @@
+{% extends 'user/main.html' %} {% block content %}
+
+<div class="header-bar">
+    <h1>Create Ware</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST">
+        {% csrf_token %} {{form.as_p}}
+        <input style="margin-top:10px ;" class="button" type="submit" value="Create">
+    </form>
+
+</div>
+
+
+
+
+{% endblock content %}
