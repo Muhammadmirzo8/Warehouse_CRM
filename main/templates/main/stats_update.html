@@ -5,7 +5,7 @@
     {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clients Update</title>
+    <title>Products</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,8 +22,10 @@
 </head>
 <!--
 `body` tag options:
+
   Apply one or more of the following classes to to the body tag
   to get the desired effect
+
   * sidebar-collapse
   * sidebar-mini
 -->
@@ -43,9 +45,9 @@
                         <!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item active">Products</li>
-                                <li class="breadcrumb-item"><a href="/logout/">Logout</a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'logout' %}">Logout</a></li>
                             </ol>
                         </div>
                         <!-- /.col -->
@@ -60,31 +62,35 @@
             <!-- Modal Header -->
 
             <!-- Modal body -->
-
-            {%for client in all_clients %}
-            <!-- Modal Header -->
-
-            <!-- Modal body -->
-            <form action="{% url 'client-update' client.id %}" id="edit-product-form" method="post">{% csrf_token %}
-                <label for="edit-product-name">Full_name:</label>
-                <input type="text" name="client_name" value="{{client.full_name}}" placeholder="Client's full_name..." id="edit-product-name" class="form-control" required>
+            <form action="{% url 'product-update' product.id %}" id="edit-stats-form" method="post">{% csrf_token %}
+                <label for="edit-stats-pr">Mahsulot nomi:</label>
+                <input type="text" name="name" value="{{product.nom}}" placeholder="Mahsulot nomi..." id="edit-stats-pr" class="form-control" required>
                 <br>
-                <label for="edit-product-shop">shop_name</label>
-                <input type="text" name="client_shop" value="{{client.shop_name}}" placeholder="Client shop's name..." id="edit-product-name" class="form-control" required>
+                <label for="edit-stats-cl">Brend nomi:</label>
+                <input type="text" name="brand_name" value="{{product.brend_nomi}}" placeholder="Brend nomi..." id="edit-stats-cl" class="form-control" required>
                 <br>
-                <label for="edit-product-telephone_number">Telephone-number</label>
-                <input type="text" name="client_tel" value="{{client.telephone_number}}" placeholder="Client's telefon number..." id="edit-product-price" class="form-control" required>
+                <label for="edit-stats-sana">Kelgan narxi:</label>
+                <input type="number" name="price" value="{{product.kelgan_narxi}}" placeholder="Mahsulot narxi..." id="edit-stats-sana" class="form-control" required>
                 <br>
-                <label for="edit-product-location">location:</label>
-                <input type="text" name="client-location" value="{{client.location}}" placeholder="Client's location..." id="edit-product-amount" class="form-control" required>
+                <label for="edit-stats-summa">Sotuvdagi narxi:</label>
+                <input type="number" name="price2" value="{{product.sotuvdagi_narx}}" placeholder="Mahsulot narxi..." id="edit-stats-summa" class="form-control" required>
+                <br>
+                <label for="edit-stats-miqdor">Dona qoldi:</label>
+                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-miqdor" class="form-control" required>
+                <br>
+                <label for="edit-stats-tolandi">Dona qoldi:</label>
+                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-tolandi" class="form-control" required>
+                <br>
+                <label for="edit-stats-nasiya">Dona qoldi:</label>
+                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-nasiya" class="form-control" required>
                 <br>
 
                 <!-- Modal footer -->
-                <button type="submit" class="btn btn-success">Edit</button>
-                <a href="/clients/"><button type="button" class="btn btn-danger" data-dismiss="modal">Go back</button></a>
+                <button type="submit" class="btn btn-success">Yangilash</button>
+                <a href="{% url 'mahsulotlar' %}"><button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button></a>
 
             </form>
-            {% endfor %}
+
 
 
             <!-- ./wrapper -->
@@ -99,6 +105,7 @@
             <script src="{% static 'dist/js/adminlte.js' %}"></script>
 
             <!-- OPTIONAL SCRIPTS -->
+            <script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
             <!-- AdminLTE for demo purposes -->
             <script src="{% static 'dist/js/demo.js' %}"></script>
             <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

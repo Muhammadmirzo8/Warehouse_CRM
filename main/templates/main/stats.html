@@ -5,7 +5,7 @@
     {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Products</title>
+    <title>Stats</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -43,7 +43,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/products/" class="nav-link">Products</a>
+                    <a href="/stats/" class="nav-link active">Stats</a>
                 </li>
             </ul>
 
@@ -59,6 +59,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="/" class="brand-link">
+
                 <span class="brand-text font-weight-light">Warehouse</span>
             </a>
 
@@ -67,9 +68,10 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
+
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Home</a>
+
                     </div>
                 </div>
 
@@ -78,19 +80,19 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-header">Menu</li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link">
+                            <a href="/" class="nav-link active">
                                 <i class="nav-icon far fa-circle text-warning"></i>
-                                <p>Statistics</p>
+                                <p>Statis</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/clients/" class="nav-link">
+                            <a href="{% url 'clients-list-create' %}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
                                 <p class="text">Clients</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/products/" class="nav-link active">
+                            <a href="{% url 'products-list-create' %}" class="nav-link">
                                 <i class="nav-icon far fa-circle text-info"></i>
                                 <p>Products</p>
                             </a>
@@ -109,14 +111,14 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Products</h1>
+                            <h1 class="m-0">Stats</h1>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item active">Products</li>
-                                <li class="breadcrumb-item"><a href="/">Logout</a></li>
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Clients</li>
+                                <li class="breadcrumb-item"><a href="{% url 'logout' %}">Logout</a></li>
                             </ol>
                         </div>
                         <!-- /.col -->
@@ -130,31 +132,33 @@
                 <div class="card card-dark">
                     <div class="card-header border-0">
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Product</button>
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Stats</button>
                         </div>
                     </div>
                     <div class="card-body">
                         <table class="table" style="text-align: center;">
                             <thead>
                                 <tr>
-
-                                    <th scope="col" style="text-align: center;">Name</th>
-                                    <th scope="col" style="text-align: center;">Brand</th>
-                                    <th scope="col" style="text-align: center;">Price</th>
-                                    <th scope="col" style="text-align: center;">Remainder</th>
-                                    <th scope="col" style="text-align: center;"></th>
+                                    <th scope="col" style="text-align: center;">Product</th>
+                                    <th scope="col" style="text-align: center;">Client</th>
+                                    <th scope="col" style="text-align: center;">Date</th>
+                                    <th scope="col" style="text-align: center;">Amount</th>
+                                    <th scope="col" style="text-align: center;">Total</th>
+                                    <th scope="col" style="text-align: center;">Payed</th>
+                                    <th scope="col" style="text-align: center;">Debt</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for product in all_products %}
+                                {% for i in all_stats %}
                                 <tr>
-
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.brand}}</td>
-                                    <td>{{product.price}} $</td>
-                                    <td>{{product.in_warehouse}} kg</td>
-                                    <td><a href="/product/edit/{{product.id}}/"><button type="submit" class="btn btn-danger" data-toggle="modal">Edit</button></a></td>
-                                    <td><a href="/product/delete/{{product.id}}"><button type="submit" class="btn btn-danger">Delete</button></a></td>
+                                    <th scope="row">{{i.product.name}} {{i.product.brand_name}}</th>
+                                    <td>{{i.client.full_name}} {{i.client.shop_name}}</td>
+                                    <td>{{i.date}}</td>
+                                    <td>{{i.product_amount}} kg/m/pieces </td>
+                                    <td>{{i.total}} $</td>
+                                    <td>{{i.payed}} $</td>
+                                    <td>{{i.debt}} $</td>
+                                    <td><a href="{% url 'stats-delete' i.id %}"><button type="submit" class="btn btn-danger" data-toggle="modal">Delete</button></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -170,31 +174,44 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header bg-dark">
-                            <h4 class="modal-title">New product</h4>
+                            <h4 class="modal-title">New Stats</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
-                        <!-- Modal body -->
-                        <form action="{% url 'products-list-create' %}" id="new-product-form" method="post">{% csrf_token %}
+                        <form action="{% url 'stats-list-create' %}" id="new-product-form" method="post">{% csrf_token %}
                             <div class="modal-body">
-                                <label for="new-product-name">Name:</label>
-                                <input type="text" name="pr_name" placeholder="Product name..." id="new-product-name" class="form-control" required>
+                                <label for="product">Product:</label>
+                                <select name="product" id="product">
+                    {% for p in products %}
+                    <option value="{{p.id}}">{{p.name}} ({{p.brand_name}}</option>
+                    {% endfor %}
+                </select>
                                 <br>
-                                <label for="new-product-name">Brand:</label>
-                                <input type="text" name="pr_brand" placeholder="Product brand..." id="new-product-brend" class="form-control" required>
+                                <label for="client">Client:</label>
+                                <select name="client" id="client">
+                    {% for c in clients %}
+                    <option value="{{c.id}}">{{c.full_name}} ({{c.shop_name}})</option>
+                    {% endfor %}
+                </select>
+
+                                <label for="new-product-name">Date:</label>
+                                <input type="text" name="st_date" placeholder="date" id="new-product-price" class="form-control" required>
                                 <br>
-                                <label for="new-product-name">Price:</label>
-                                <input type="text" name="pr_price" placeholder="Product price..." id="new-product-price" class="form-control" required>
+                                <label for="new-product-name">Product amount:</label>
+                                <input type="text" name="pr_amount" placeholder="product amount" id="new-product-sale-price" class="form-control" required>
                                 <br>
-                                <label for="new-product-name">Remainder:</label>
-                                <input type="number" name="pr_amount" placeholder="Product remined..." id="new-product-amount" class="form-control" required>
+                                <label for="new-product-name">Money amount :</label>
+                                <input type="number" name="st_total" placeholder="total" id="new-product-amount" class="form-control" required>
+                                <br>
+                                <label for="new-product-name">Payed:</label>
+                                <input type="number" name="st_payed" placeholder="payed" id="new-product-amount" class="form-control" required>
                                 <br>
                             </div>
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success">Add</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Exit</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Go back</button>
                             </div>
                         </form>
 

@@ -55,8 +55,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../index.html" class="brand-link">
-                <img src="" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <a href="/" class="brand-link">
                 <span class="brand-text font-weight-light">Warehouse</span>
             </a>
 
@@ -64,8 +63,8 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="" class="img-circle elevation-2" alt="User Image">
+                    <div>
+                        <span class="brand-text font-weight-light">Warehouse</span>
                     </div>
                     <div class="info">
                         <a href="#" class="d-block"></a>
@@ -115,7 +114,7 @@
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                                 <li class="breadcrumb-item active">Clients</li>
-                                <li class="breadcrumb-item"><a href="/">Logout</a></li>
+                                <li class="breadcrumb-item"><a href="/logout/">Logout</a></li>
                             </ol>
                         </div>
                         <!-- /.col -->
@@ -138,7 +137,8 @@
                                 <tr>
 
 
-                                    <th scope="col" style="width: 255px; text-align: center;">Full_name</th>
+                                    <th scope="col" style="text-align: center;">Full_name</th>
+                                    <th scope="col" style="text-align: center;">Shop_name</th>
                                     <th scope="col" style="text-align: center;">location</th>
                                     <th scope="col" style="text-align: center;">Telephone_number</th>
                                 </tr>
@@ -147,11 +147,12 @@
                                 {% for client in all_clients %}
                                 <tr>
 
-                                    <td>{{client.name}}</td>
+                                    <td>{{client.full_name}}</td>
+                                    <td>{{client.shop_name}}</td>
                                     <td>{{client.location}}</td>
                                     <td>{{client.telephone_number}}</td>
-                                    <td><a href='/client/edit/{{client.id}}'><button type="submit" class="btn btn-danger" data-toggle="modal">Edit</button></a></td>
-                                    <td><a href='/client/delete/{{client.id}}'><button type="submit" class="btn btn-danger" data-toggle="modal">Delete</button></a></td>
+                                    <td><a href='/client/edit/{{client.id}}/'><button type="submit" class="btn btn-danger" data-toggle="modal">Edit</button></a></td>
+                                    <td><a href='/client/delete/{{client.id}}/'><button type="submit" class="btn btn-danger" data-toggle="modal">Delete</button></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -174,13 +175,16 @@
                         <form action="{% url 'clients-list-create' %}" id="new-product-form" method="post">{% csrf_token %}
                             <div class="modal-body">
                                 <label for="new-product-name">Full_name:</label>
-                                <input type="text" name="client_name" placeholder="Mijoz to'liq ismi..." id="new-product-name" class="form-control" required>
+                                <input type="text" name="new-product-name" placeholder="Full name..." id="new-product-name" class="form-control" required>
                                 <br>
-                                <label for="new-product-name">Telephone_number:</label>
-                                <input type="text" name="client_phone" placeholder="Telefon raqami..." id="new-product-price" class="form-control" required>
+                                <label for="new-product-telephone_number">Telephone_number:</label>
+                                <input type="text" name="new-product-telephone_number" placeholder="Telephone_number..." id="new-product-number" class="form-control" required>
                                 <br>
-                                <label for="new-product-name">location:</label>
-                                <input type="text" name="client_address" placeholder="Mijoz manzili..." id="new-product-amount" class="form-control" required>
+                                <label for="new-product-shop_name">Shop_name:</label>
+                                <input type="text" name="new-product-shop_name" placeholder="Shop_name..." id="new-product-shop" class="form-control" required>
+                                <br>
+                                <label for="new-product-location">location:</label>
+                                <input type="text" name="new-product-location" placeholder="Address..." id="new-product-location" class="form-control" required>
                                 <br>
                             </div>
 
