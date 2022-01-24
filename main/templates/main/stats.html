@@ -101,8 +101,9 @@
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
-        </aside>
+            <!-- /.sidebar --> 
+        </aside> 
+
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -158,6 +159,7 @@
                                     <td>{{i.total}} $</td>
                                     <td>{{i.payed}} $</td>
                                     <td>{{i.debt}} $</td>
+                                    <td><a href="{% url 'stats-update' i.id %}"><button type="submit" class="btn btn-danger" data-toggle="modal">Edit</button></a></td> 
                                     <td><a href="{% url 'stats-delete' i.id %}"><button type="submit" class="btn btn-danger" data-toggle="modal">Delete</button></a></td>
                                 </tr>
                                 {% endfor %}
@@ -193,9 +195,9 @@
                     <option value="{{c.id}}">{{c.full_name}} ({{c.shop_name}})</option>
                     {% endfor %}
                 </select>
-
+                <br>
                                 <label for="new-product-name">Date:</label>
-                                <input type="text" name="st_date" placeholder="date" id="new-product-price" class="form-control" required>
+                                <input id="date" type="date" name="st_date" placeholder="date" id="new-product-price" class="form-control" required>
                                 <br>
                                 <label for="new-product-name">Product amount:</label>
                                 <input type="text" name="pr_amount" placeholder="product amount" id="new-product-sale-price" class="form-control" required>

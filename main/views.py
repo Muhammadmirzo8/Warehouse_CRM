@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View 
 from django.views.generic import DeleteView 
@@ -124,7 +125,7 @@ class StatsListCreateView(LoginRequiredMixin, View):
         amount = request.POST['pr_amount'],   
         amount1 = Product.objects.get(id=pr)  
         if int(amount[0]) > amount1.in_warehouse or amount1.in_warehouse==0: 
-                return messages.warning(request, 'Amount of products are small.')
+                return HttpResponse('Amount of products are small.')
         else:
                 Stats.objects.create(
                     client=Client.objects.get(id=cl),  
@@ -139,21 +140,28 @@ class StatsListCreateView(LoginRequiredMixin, View):
                 amount1.save()  
                 return redirect('/stats/')   
 
-# class ProductUpdateView(LoginRequiredMixin, View):  
-#     def get(self, request,pk):  
-#             pr = Product.objects.filter(id=pk)  
-#             return render(request, "main/product_update.html",{"pr": pr}) 
+class StatsUpdateView(LoginRequiredMixin, View):  
+    def get(self, request,pk):  
+            w = Ware.objects.get(user=request.user) 
+            st = Stats.objects.get(id=pk)
+            cl = Client.objects.filter(ware=w) 
+            pr = Product.objects.filter(ware=w)
+            return render(request, "main/stats_update.html",{"i": st, "clients": cl , "products": pr}) 
     
-#     def post(self, request, pk):
-#             w = Ware.objects.get(user=request.user)
-#             pr = Product.objects.get(id=pk)
-#             pr.name=request.POST.get("name")
-#             pr.brand=request.POST.get("brand_name")
-#             pr.price=request.POST.get("price")
-#             pr.in_warehouse=request.POST.get("amount")
-#             pr.ware=w 
-#             pr.save()
-#             return redirect("/products/")
+    def post(self, request, pk): 
+        w = Ware.objects.get(user=request.user)  
+        cl = request.POST["client"]
+        pr = request.POST["product"] 
+        t =request.POST['money'], 
+        p =request.POST['payed'], 
+        Stats.objects.update(
+                    client=Client.objects.get(id=cl),  
+                    product=Product.objects.get(id=pr),
+                    total = t[0], 
+                    payed= p[0],
+                    debt= int(t[0]) - int(p[0]),
+                    ware=w) 
+        return redirect('/stats/') 
     
 
 class StatsDeleteView(LoginRequiredMixin, DeleteView):

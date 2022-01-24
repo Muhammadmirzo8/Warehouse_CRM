@@ -5,7 +5,7 @@
     {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Products</title>
+    <title>Stats Update</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -40,7 +40,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0">Products</h1>
+                            <h1 class="m-0">Stats</h1>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-6">
@@ -62,35 +62,34 @@
             <!-- Modal Header -->
 
             <!-- Modal body -->
-            <form action="{% url 'product-update' product.id %}" id="edit-stats-form" method="post">{% csrf_token %}
-                <label for="edit-stats-pr">Mahsulot nomi:</label>
-                <input type="text" name="name" value="{{product.nom}}" placeholder="Mahsulot nomi..." id="edit-stats-pr" class="form-control" required>
+            <form action="{% url 'stats-update' i.id %}" id="edit-product-form" method="post">{% csrf_token %}
+                    <label for="product">Product:</label>
+                    <select name="product" id="product">
+        {% for p in products %}
+        <option value="{{p.id}}">{{p.name}} ({{p.brand_name}}</option>
+        {% endfor %}
+    </select> 
+    <br>
+                                <label for="client">Client:</label>
+                                <select name="client" id="client">
+                    {% for c in clients %}
+                    <option value="{{c.id}}">{{c.full_name}} ({{c.shop_name}})</option>
+                    {% endfor %}
+                </select> 
                 <br>
-                <label for="edit-stats-cl">Brend nomi:</label>
-                <input type="text" name="brand_name" value="{{product.brend_nomi}}" placeholder="Brend nomi..." id="edit-stats-cl" class="form-control" required>
+                <label for="edit-stats-tolandi">Money amount:</label>
+                <input type="number" name="money" value="{{i.total}}" placeholder="Money amount..." id="edit-stats-tolandi" class="form-control" required>
                 <br>
-                <label for="edit-stats-sana">Kelgan narxi:</label>
-                <input type="number" name="price" value="{{product.kelgan_narxi}}" placeholder="Mahsulot narxi..." id="edit-stats-sana" class="form-control" required>
-                <br>
-                <label for="edit-stats-summa">Sotuvdagi narxi:</label>
-                <input type="number" name="price2" value="{{product.sotuvdagi_narx}}" placeholder="Mahsulot narxi..." id="edit-stats-summa" class="form-control" required>
-                <br>
-                <label for="edit-stats-miqdor">Dona qoldi:</label>
-                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-miqdor" class="form-control" required>
-                <br>
-                <label for="edit-stats-tolandi">Dona qoldi:</label>
-                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-tolandi" class="form-control" required>
-                <br>
-                <label for="edit-stats-nasiya">Dona qoldi:</label>
-                <input type="number" name="amount" value="{{product.miqdor}}" placeholder="Dona qoldi..." id="edit-stats-nasiya" class="form-control" required>
+                <label for="edit-stats-nasiya">Payed:</label>
+                <input type="number" name="payed" value="{{i.payed}}" placeholder="Payed..." id="edit-stats-nasiya" class="form-control" required>
                 <br>
 
                 <!-- Modal footer -->
-                <button type="submit" class="btn btn-success">Yangilash</button>
-                <a href="{% url 'mahsulotlar' %}"><button type="button" class="btn btn-danger" data-dismiss="modal">Yopish</button></a>
+                <button type="submit" class="btn btn-success">Edit</button>
+                <a href="/stats/"><button type="button" class="btn btn-danger" data-dismiss="modal">Go Back</button></a>
 
             </form>
-
+    
 
 
             <!-- ./wrapper -->

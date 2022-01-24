@@ -21,7 +21,7 @@ class Product(models.Model):
 class Stats(models.Model): 
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True)  
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True) 
-    date = models.DateField(auto_now_add=True)   
+    date = models.DateField()   
     product_amount = models.PositiveIntegerField()
     total = models.PositiveIntegerField(default=0)
     payed = models.PositiveIntegerField(default=0)
